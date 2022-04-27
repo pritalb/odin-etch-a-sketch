@@ -12,10 +12,13 @@ function CreateGrid(size) {
 	row.width = size;
 
 	const grid = document.querySelector('div');
-	grid.addEventListener('mousedown', () => {
+	grid.addEventListener('mousedown', (event) => {
+		event.preventDefault();
+		console.log('canDraw set to true.')
 		canDraw = true;
 	})
 	grid.addEventListener('mouseup', () => {
+		console.log('canDraw set to false.')
 		canDraw = false;
 	})
 	
@@ -47,13 +50,23 @@ function toggleEraser() {
 }
 
 function main() {
-	CreateGrid(4);
+	CreateGrid(32);
 
 	document.querySelectorAll('.cell').forEach(cell => {
 		cell.addEventListener('mousedown', (event) => {
+			event.preventDefault();
+
+			if (canDraw) {
+				console.log('mousedown on cell.');
+			}
+
 			changeColor(cell);
 		})
-		cell.addEventListener('mouseover', (event) => {
+		cell.addEventListener('mouseover', () => {
+			if (canDraw) {
+				console.log('mouseover on cell.');
+			}
+
 			changeColor(cell);
 		})
 	});
@@ -61,14 +74,6 @@ function main() {
 	const eraserButton = document.querySelector('#eraser');
 	eraserButton.addEventListener('click', () => {
 		toggleEraser();
-
-		let buttonColor = '#ffffff';
-
-		if (canErase) {
-			buttonColor = '#dddddd';
-		}
-
-		eraserButton.style.backgroundColor = buttonColor;
 	})
 }
 
