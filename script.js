@@ -1,32 +1,42 @@
 let canDraw = false;
 let canErase = false;
 
-function CreateGrid(size) {
+function round(num, precision) {
+    return +(Math.round(num + `e+${precision}`)  + `e-${precision}`);
+};
+
+function CreateGrid() {
+	const grid = document.querySelector('div');
+	grid.innerHTML = '';
+
 	const cell = document.createElement('div');
+	const grid_size = document.querySelector('#slider').value;
+	const cell_size = round(600/grid_size, 2); // 600px is the canvas width/height
+	const cell_size_formatted = `${cell_size}px`
 	cell.className = 'cell';
-	cell.style.height = '1rem';
-	cell.style.width = '1rem';
+	cell.style.height = cell_size_formatted;
+	cell.style.width = cell_size_formatted;
+
+	console.log(`grid size: ${grid_size}, cell size: ${cell_size}, ${cell_size_formatted}`);
 
 	let row = document.createElement('div');
 	row.className = 'row';
-	row.width = size;
 
-	const grid = document.querySelector('div');
 	grid.addEventListener('mousedown', (event) => {
 		event.preventDefault();
-		console.log('canDraw set to true.')
+		// console.log('canDraw set to true.')
 		canDraw = true;
 	})
 	grid.addEventListener('mouseup', () => {
-		console.log('canDraw set to false.')
+		// console.log('canDraw set to false.')
 		canDraw = false;
 	})
 	
-	for (let index = 0; index < size; index++) {
+	for (let index = 0; index < grid_size; index++) {
 		row.append(cell.cloneNode());
 	}
 
-	for (let index = 0; index < size; index++) {
+	for (let index = 0; index < grid_size; index++) {
 		grid.append(row.cloneNode(true));
 	}
 }
@@ -34,7 +44,7 @@ function CreateGrid(size) {
 
 function changeColor(cell) {
 	if (canDraw) {
-		console.log('change color function called.');
+		// console.log('change color function called.');
 		let color = document.querySelector('#color-picker').value;;
 
 		if (canErase) {
@@ -50,21 +60,22 @@ function toggleEraser() {
 }
 
 function main() {
-	CreateGrid(32);
+	CreateGrid();
+	document.querySelector('#slider').addEventListener('change', CreateGrid);
 
 	document.querySelectorAll('.cell').forEach(cell => {
 		cell.addEventListener('mousedown', (event) => {
 			event.preventDefault();
 
 			if (canDraw) {
-				console.log('mousedown on cell.');
+				// console.log('mousedown on cell.');
 			}
 
 			changeColor(cell);
 		})
 		cell.addEventListener('mouseover', () => {
 			if (canDraw) {
-				console.log('mouseover on cell.');
+				// console.log('mouseover on cell.');
 			}
 
 			changeColor(cell);
