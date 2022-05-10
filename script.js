@@ -1,9 +1,22 @@
 let canDraw = false;
 let canErase = false;
+let randomColorMode = false;
 
 function round(num, precision) {
     return +(Math.round(num + `e+${precision}`)  + `e-${precision}`);
 };
+
+function getRandomColor() {
+	color = '#';
+	colCode = '0123456789abcdef';
+	
+	for(i = 0; i < 6; i++) {
+		j = Math.floor(Math.random() * 16);
+		color = color + colCode[j];
+	}
+
+	return color;
+}
 
 function CreateGrid() {
 	const grid = document.querySelector('div');
@@ -69,6 +82,8 @@ function changeColor(cell) {
 
 		if (canErase) {
 			color = '#ffffff';
+		} else if (randomColorMode) {
+			color = getRandomColor();
 		}
 	
 		cell.style.backgroundColor = color;
@@ -77,6 +92,12 @@ function changeColor(cell) {
 
 function toggleEraser() {
 	canErase = !canErase;
+	randomColorMode = false;
+}
+
+function toggleRandomColorMode() {
+	randomColorMode = !randomColorMode;
+	canErase = false;
 }
 
 function main() {
@@ -88,10 +109,19 @@ function main() {
 		CreateGrid();
 	});
 
+	document.querySelector('#reset').addEventListener('click', () => {
+		CreateGrid();
+	});
+
+	document.querySelector('#random').addEventListener('click', () => {
+		toggleRandomColorMode();
+	});
+
 	const eraserButton = document.querySelector('#eraser');
 	eraserButton.addEventListener('click', () => {
 		toggleEraser();
-	})
+		console.log(`eraser mode: ${canErase}, random color mode: ${randomColorMode}`);
+	});
 }
 
 main();
