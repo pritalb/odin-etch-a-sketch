@@ -9,14 +9,27 @@
 	<script src="script.js" defer></script>
 </head>
 <body>
-	<div id="grid"></div>
+	<div id="main">
+		<div id="panel">
+			<h1>Etch-a-Sketch</h1>
 
-	<input type="color" name="color-picker" id="color-picker">
-	<button id="eraser">Eraser mode</button>
-	<button id="random">Random color mode</button>
-	<button id="reset">Reset Canvas</button>
-
-	<label for="slider" id="slider_label">Canvas size: 10</label>
-	<input type="range" min="2" max="100" value="10" name="slider" id="slider">
+			<div id="panel-buttons">
+				<input type="color" name="color-picker" id="color-picker" />
+				<button id="eraser" class="input">Eraser mode</button>
+				<button id="random" class="input">Random color mode</button>
+				<button id="reset" class="input">Reset Canvas</button>
+				
+				<div id="slider-container">
+					<label for="slider" id="slider-label">Canvas size: 10</label>
+					<input type="range" min="2" max="100" value="10" name="slider" id="slider" />
+				</div>
+			</div>
+		</div>
+	
+		<div id="canvas">
+			<div id="grid"></div>
+		</div>
+	</div>
+	
 </body>
 </html>

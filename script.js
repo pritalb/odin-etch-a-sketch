@@ -1,3 +1,4 @@
+
 let canDraw = false;
 let canErase = false;
 let randomColorMode = false;
@@ -19,7 +20,7 @@ function getRandomColor() {
 }
 
 function CreateGrid() {
-	const grid = document.querySelector('div');
+	const grid = document.querySelector('#grid');
 	grid.innerHTML = '';
 
 	const cell = document.createElement('div');
@@ -101,27 +102,29 @@ function toggleRandomColorMode() {
 }
 
 function main() {
+	console.log('main function called.');
 	CreateGrid();
 
 	const slider = document.querySelector('#slider');
 	slider.addEventListener('change', () => {
-		document.querySelector('#slider_label').innerHTML = slider.value;
+		document.querySelector('#slider-label').innerHTML = `Canvas size: ${slider.value}`;
 		CreateGrid();
 	});
-
+	
 	document.querySelector('#reset').addEventListener('click', () => {
 		CreateGrid();
 	});
-
+	
 	document.querySelector('#random').addEventListener('click', () => {
 		toggleRandomColorMode();
 	});
-
+	
 	const eraserButton = document.querySelector('#eraser');
 	eraserButton.addEventListener('click', () => {
 		toggleEraser();
 		console.log(`eraser mode: ${canErase}, random color mode: ${randomColorMode}`);
 	});
+
 }
 
 main();
